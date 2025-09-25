@@ -4,6 +4,7 @@ import express, {
   type Response,
 } from "express";
 import cors from "cors";
+import { CourseRotuer } from "./modules/course/course.routes.js";
 
 const app: Application = express();
 
@@ -15,6 +16,8 @@ app.use(
     credentials: true,
   })
 );
+
+app.use("/api/courses", CourseRotuer);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World");
