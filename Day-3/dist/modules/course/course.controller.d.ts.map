@@ -1,0 +1,1 @@
+{"version":3,"file":"course.controller.d.ts","sourceRoot":"","sources":["../../../src/modules/course/course.controller.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,MAAM,uBAAuB,CAAC;AACrD,OAAO,KAAK,EAAE,OAAO,EAAE,QAAQ,EAAE,YAAY,EAAE,MAAM,SAAS,CAAC;AAoB/D,eAAO,MAAM,gBAAgB;wBAftB,OAAO,CAAC,EAAE,EAAE,EAAE,EAAE,OAAO,CAAC,OACxB,QAAQ,QACP,YAAY;CAenB,CAAC"}
