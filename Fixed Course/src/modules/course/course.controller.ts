@@ -25,7 +25,9 @@ const getSingleCourse = async (
   next: NextFunction
 ) => {
   try {
-    const course = await courseService.getSingleCourseService(req.params.id);
+    const course = await courseService.getSingleCourseService(
+      req.params.id as string
+    );
     if (!course) {
       return next(createHttpError(404, "course not found"));
     }
@@ -47,8 +49,55 @@ const getCourses = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const updateCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const updatedCourse = await courseService.updateCourseService(
+      req.params.id as string,
+      req.body as ICourse
+    );
+
+    if (!updatedCourse) {
+      return next(createHttpError);
+    }
+
+    res
+      .status(200)
+      .json({ message: "Course Updated Successful", updatedCourse });
+  } catch (error) {
+    next(error);
+  }
+};
+const deleteCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const deletedCourse = await courseService.deleteCourseService(
+      req.params.id as string
+    );
+
+    if (!deletedCourse) {
+      return next(
+        createHttpError(400).json({
+          message: "Course deletion failed",
+          deletedCourse,
+        })
+      );
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const courseController = {
   createCourse,
   getSingleCourse,
   getCourses,
+  updateCourse,
+  deleteCourse,
 };

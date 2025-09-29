@@ -6,6 +6,16 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   address: { type: String },
   avater: { type: String },
+  status:{
+    type:String,
+    enum:[""],
+    default:"pending"
+  },
+  role: {
+    type: String,
+    enum: ["student", "instructor", "admin"],
+    default: "student",
+  },
 });
 
 const User = mongoose.model("User", userSchema);

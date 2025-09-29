@@ -1,12 +1,18 @@
-import { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 
 export interface AppError extends Error {
   status?: number;
   data?: any;
 }
 
-export const HandleError = async (err, req, res, next) => {
-  res.status(err.status).json({
-    message: err.data || "Internal server error",
-  });
+export const HandleError = async (
+  err: AppError,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+  } catch (error: unknown) {
+    next(error);
+  }
 };
