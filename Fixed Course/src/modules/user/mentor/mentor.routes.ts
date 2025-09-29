@@ -5,4 +5,4 @@ const router = Router();
 
 router.post("/register", createMentor);
 
-export const studentRoutes = router;
+export const mentorRouter = router;

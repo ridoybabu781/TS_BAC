@@ -19,6 +19,6 @@ const SCreateAdmin = async (payload: IBaseUser, next: NextFunction) => {
   });
 };
 
-export const mentorService = {
+export const adminService = {
   SCreateAdmin,
 };

@@ -9,6 +9,6 @@ export const HandleError = (
   if (err) {
     res
       .status(err.status || 500)
-      .json({ message: err.message || "An error occurred" });
+      .json({ message: err.message || "An error occurred", success: false });
   }
 };

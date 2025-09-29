@@ -5,4 +5,4 @@ const router = Router();
 
 router.post("/register", createAdmin);
 
-export const studentRoutes = router;
+export const adminRoutes = router;
