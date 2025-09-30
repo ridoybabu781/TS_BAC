@@ -1,0 +1,52 @@
+import mongoose, { Schema } from "mongoose";
+import type { IProduct } from "./product.interface.js";
+
+const productSchema = new Schema<IProduct>(
+  {
+    productId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    seller: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    slag: { type: String, required: true, unique: true },
+    name: {
+      type: String,
+      required: true,
+    },
+    stock: { type: Number, required: true },
+    description: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    discountPrice: Number,
+    images: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    brand: String,
+    categories: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    rating: Number,
+
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const Product = mongoose.model("Product", productSchema);

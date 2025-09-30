@@ -1,0 +1,42 @@
+import mongoose, { Schema } from "mongoose";
+const productSchema = new Schema({
+    productId: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    slag: { type: String, required: true, unique: true },
+    name: {
+        type: String,
+        required: true,
+    },
+    stock: { type: Number, required: true },
+    description: {
+        type: String,
+        required: true,
+    },
+    price: {
+        type: Number,
+        required: true,
+    },
+    discountPrice: Number,
+    images: [
+        {
+            type: String,
+            required: true,
+        },
+    ],
+    brand: String,
+    categories: [
+        {
+            type: String,
+            required: true,
+        },
+    ],
+    rating: Number,
+    totalReview: Number,
+}, {
+    timestamps: true,
+});
+export const Product = mongoose.model("Product", productSchema);
+//# sourceMappingURL=product.model.js.map
