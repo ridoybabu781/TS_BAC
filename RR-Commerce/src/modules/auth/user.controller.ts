@@ -1,0 +1,89 @@
+import type { NextFunction, Request, Response } from "express";
+import createHttpError from "http-errors";
+import { SUser } from "./user.service.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import type { IBaseUser } from "./user.interface.js";
+dotenv.config();
+
+export const createUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = await SUser.UCreate(req.body);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email, password } = req.body;
+    const user = await SUser.ULogin(email as string, password as string, next);
+
+    if (!user) {
+      return next(createHttpError(404, "User Fetching Error"));
+    }
+
+    const token = jwt.sign(
+      { id: user._id, email },
+      process.env.JWT_SECRET as string,
+      { expiresIn: "1h" }
+    );
+
+    res
+      .status(200)
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: false,
+      })
+      .json({ message: "User Fetched Successfully", user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const profile = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.userId;
+
+    const user = await SUser.UProfile(userId as string);
+    if (!user) {
+      return next(createHttpError(400, "User fetching failed"));
+    }
+    res.status(200).json({ message: "User fetched successfully", user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const update = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const updatedUser = await SUser.UUpdate(
+      req.userId,
+      req.body as IBaseUser,
+      next
+    );
+    if (!updatedUser) {
+      return next(createHttpError(400, "User Updation failed"));
+    }
+
+    res.status(201).json({ message: "User Updation Successful", updatedUser });
+  } catch (error) {
+    next(error);
+  }
+};

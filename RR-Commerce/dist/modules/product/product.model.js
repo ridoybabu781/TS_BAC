@@ -5,6 +5,10 @@ const productSchema = new Schema({
         required: true,
         unique: true,
     },
+    seller: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    },
     slag: { type: String, required: true, unique: true },
     name: {
         type: String,
@@ -34,7 +38,7 @@ const productSchema = new Schema({
         },
     ],
     rating: Number,
-    totalReview: Number,
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
 }, {
     timestamps: true,
 });

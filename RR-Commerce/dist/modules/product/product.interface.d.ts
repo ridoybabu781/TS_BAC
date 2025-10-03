@@ -1,5 +1,7 @@
+import type { Types } from "mongoose";
 export interface IProduct {
     _id?: string;
+    seller: Types.ObjectId;
     slag: string;
     productId?: string;
     name: string;
@@ -11,7 +13,7 @@ export interface IProduct {
     brand?: string;
     categories: string[];
     rating?: number;
-    totalReview?: number;
+    reviews?: Types.ObjectId[];
     createdAt?: Date;
     updatedAt?: Date;
 }

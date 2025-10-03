@@ -1,10 +1,15 @@
 import { Schema } from "mongoose";
-export declare const Category: import("mongoose").Model<{}, {}, {}, {}, import("mongoose").Document<unknown, {}, {}, {}, import("mongoose").DefaultSchemaOptions> & Required<{
-    _id: unknown;
+import type { ICategory } from "./category.interface.js";
+export declare const Category: import("mongoose").Model<ICategory, {}, {}, {}, import("mongoose").Document<unknown, {}, ICategory, {}, import("mongoose").DefaultSchemaOptions> & ICategory & Required<{
+    _id: string;
 }> & {
     __v: number;
-}, Schema<any, import("mongoose").Model<any, any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, {}, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<{}>, {}, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & import("mongoose").FlatRecord<{}> & Required<{
-    _id: unknown;
+}, Schema<ICategory, import("mongoose").Model<ICategory, any, any, any, import("mongoose").Document<unknown, any, ICategory, any, {}> & ICategory & Required<{
+    _id: string;
+}> & {
+    __v: number;
+}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, ICategory, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<ICategory>, {}, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & import("mongoose").FlatRecord<ICategory> & Required<{
+    _id: string;
 }> & {
     __v: number;
 }>>;
