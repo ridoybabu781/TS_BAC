@@ -1,10 +1,11 @@
+import type { NextFunction, Request } from "express";
 import type { IProduct } from "./product.interface.js";
 export declare const PService: {
-    Add: (payload: IProduct) => Promise<import("mongoose").Document<unknown, {}, IProduct, {}, import("mongoose").DefaultSchemaOptions> & IProduct & Required<{
+    Add: (req: Request, payload: IProduct, next: NextFunction) => Promise<void | (import("mongoose").Document<unknown, {}, IProduct, {}, import("mongoose").DefaultSchemaOptions> & IProduct & Required<{
         _id: string;
     }> & {
         __v: number;
-    }>;
+    })>;
     Get: () => Promise<(import("mongoose").Document<unknown, {}, IProduct, {}, import("mongoose").DefaultSchemaOptions> & IProduct & Required<{
         _id: string;
     }> & {
@@ -15,12 +16,12 @@ export declare const PService: {
     }> & {
         __v: number;
     }) | null>;
-    Update: (id: string, payload: IProduct) => Promise<(import("mongoose").Document<unknown, {}, IProduct, {}, import("mongoose").DefaultSchemaOptions> & IProduct & Required<{
+    Update: (req: Request, id: string, payload: IProduct, next: NextFunction) => Promise<void | (import("mongoose").Document<unknown, {}, IProduct, {}, import("mongoose").DefaultSchemaOptions> & IProduct & Required<{
         _id: string;
     }> & {
         __v: number;
     }) | null>;
-    Delete: (id: string) => Promise<(import("mongoose").Document<unknown, {}, IProduct, {}, import("mongoose").DefaultSchemaOptions> & IProduct & Required<{
+    Delete: (req: Request, id: string, next: NextFunction) => Promise<void | (import("mongoose").Document<unknown, {}, IProduct, {}, import("mongoose").DefaultSchemaOptions> & IProduct & Required<{
         _id: string;
     }> & {
         __v: number;

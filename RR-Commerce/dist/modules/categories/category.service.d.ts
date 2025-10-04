@@ -1,10 +1,11 @@
+import type { NextFunction, Request } from "express";
 import type { ICategory } from "./category.interface.js";
 export declare const CService: {
-    Add: (payload: ICategory) => Promise<import("mongoose").Document<unknown, {}, ICategory, {}, import("mongoose").DefaultSchemaOptions> & ICategory & Required<{
+    Add: (req: Request, payload: ICategory, next: NextFunction) => Promise<void | (import("mongoose").Document<unknown, {}, ICategory, {}, import("mongoose").DefaultSchemaOptions> & ICategory & Required<{
         _id: string;
     }> & {
         __v: number;
-    }>;
+    })>;
     Get: () => Promise<(import("mongoose").Document<unknown, {}, ICategory, {}, import("mongoose").DefaultSchemaOptions> & ICategory & Required<{
         _id: string;
     }> & {

@@ -5,7 +5,12 @@ const categoryModel = new Schema({
         required: true,
     },
     icon: {
-        type: String,
+        iconUrl: {
+            type: String,
+            required: true,
+        },
+        iconPublicId: String,
+        required: true,
     },
 });
 export const Category = model("Category", categoryModel);

@@ -8,7 +8,11 @@ export const addCategory = async (
   next: NextFunction
 ) => {
   try {
-    const category = await CService.Add(req.body as ICategory);
+    const category = await CService.Add(
+      req as Request,
+      req.body as ICategory,
+      next as NextFunction
+    );
     if (!category) {
       return res.status(400).json({ message: "category creation failed" });
     }

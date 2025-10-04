@@ -22,12 +22,20 @@ const productSchema = new Schema<IProduct>(
       required: true,
     },
     discountPrice: Number,
-    images: [
-      {
-        type: String,
-        required: true,
-      },
-    ],
+    images: {
+      imageUrls: [
+        {
+          type: String,
+          required: true,
+        },
+      ],
+      imagePublicIds: [
+        {
+          type: String,
+          required: true,
+        },
+      ],
+    },
     brand: String,
     categories: [
       {

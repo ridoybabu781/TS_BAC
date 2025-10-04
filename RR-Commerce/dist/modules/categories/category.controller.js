@@ -1,7 +1,7 @@
 import { CService } from "./category.service.js";
 export const addCategory = async (req, res, next) => {
     try {
-        const category = await CService.Add(req.body);
+        const category = await CService.Add(req, req.body, next);
         if (!category) {
             return res.status(400).json({ message: "category creation failed" });
         }

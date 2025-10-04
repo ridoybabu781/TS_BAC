@@ -1,7 +1,7 @@
 import { PService } from "./product.service.js";
 export const addProduct = async (req, res, next) => {
     try {
-        const product = await PService.Add(req.body);
+        const product = await PService.Add(req, req.body);
         if (!product) {
             return res.status(400).json({ message: "Product creation failed" });
         }
@@ -37,7 +37,7 @@ export const getProduct = async (req, res, next) => {
 };
 export const updateProduct = async (req, res, next) => {
     try {
-        const product = await PService.Update(req.params.id, req.body);
+        const product = await PService.Update(req, req.params.id, req.body, next);
         if (!product) {
             return res.status(404).json({ message: "Product updation failed" });
         }
@@ -49,7 +49,7 @@ export const updateProduct = async (req, res, next) => {
 };
 export const deleteProduct = async (req, res, next) => {
     try {
-        const product = await PService.Delete(req.params.id);
+        const product = await PService.Delete(req, req.params.id, next);
         if (!product) {
             return res.status(404).json({ message: "Product deletion failed" });
         }

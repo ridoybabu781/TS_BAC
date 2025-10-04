@@ -11,7 +11,10 @@ export interface IProduct {
 
   discountPrice?: number;
   stock: number;
-  images: string[];
+  images: {
+    imageUrls: string[];
+    imagePublicIds: string[];
+  };
   brand?: string;
   categories: string[];
   rating?: number;
