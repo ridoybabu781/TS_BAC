@@ -6,12 +6,14 @@ import {
   getProducts,
   updateProduct,
 } from "./product.controller.js";
+import { upload } from "../../utils/multer.js";
+import { isVendor } from "../../middlewares/Vendor.js";
 const router = Router();
 
-router.post("/addProduct", addProduct);
+router.post("/addProduct", upload.array("productImage"), isVendor, addProduct);
 router.get("/:id", getProduct);
 router.get("/", getProducts);
-router.put("/update/:id", updateProduct);
-router.delete("/delete/:id", deleteProduct);
+router.put("/update/:id", isVendor, updateProduct);
+router.delete("/delete/:id", isVendor, deleteProduct);
 
 export const ProductRouter = router;

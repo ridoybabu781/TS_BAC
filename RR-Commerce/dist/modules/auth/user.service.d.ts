@@ -11,5 +11,20 @@ export declare const SUser: {
     }> & {
         __v: number;
     })>;
+    UProfile: (userId: string) => Promise<(import("mongoose").Document<unknown, {}, IBaseUser, {}, import("mongoose").DefaultSchemaOptions> & IBaseUser & Required<{
+        _id: string;
+    }> & {
+        __v: number;
+    }) | null>;
+    UUpdate: (id: string, payload: IBaseUser) => Promise<(import("mongoose").Document<unknown, {}, IBaseUser, {}, import("mongoose").DefaultSchemaOptions> & IBaseUser & Required<{
+        _id: string;
+    }> & {
+        __v: number;
+    }) | null>;
+    UDelete: (id: string, next: NextFunction) => Promise<(import("mongoose").Document<unknown, {}, IBaseUser, {}, import("mongoose").DefaultSchemaOptions> & IBaseUser & Required<{
+        _id: string;
+    }> & {
+        __v: number;
+    }) | null>;
 };
 //# sourceMappingURL=user.service.d.ts.map

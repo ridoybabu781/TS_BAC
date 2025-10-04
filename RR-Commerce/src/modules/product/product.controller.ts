@@ -8,7 +8,7 @@ export const addProduct = async (
   next: NextFunction
 ) => {
   try {
-    const product = await PService.Add(req.body as IProduct);
+    const product = await PService.Add(req as Request, req.body as IProduct);
     if (!product) {
       return res.status(400).json({ message: "Product creation failed" });
     }
@@ -58,8 +58,10 @@ export const updateProduct = async (
 ) => {
   try {
     const product = await PService.Update(
+      req as Request,
       req.params.id as string,
-      req.body as IProduct
+      req.body as IProduct,
+      next as NextFunction
     );
     if (!product) {
       return res.status(404).json({ message: "Product updation failed" });
@@ -75,7 +77,11 @@ export const deleteProduct = async (
   next: NextFunction
 ) => {
   try {
-    const product = await PService.Delete(req.params.id as string);
+    const product = await PService.Delete(
+      req as Request,
+      req.params.id as string,
+      next as NextFunction
+    );
     if (!product) {
       return res.status(404).json({ message: "Product deletion failed" });
     }

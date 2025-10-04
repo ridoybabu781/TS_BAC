@@ -10,6 +10,7 @@ import {
 } from "./user.controller.js";
 import { isUser } from "../../middlewares/User.js";
 import { vendorRouter } from "./vendor/vendor.routes.js";
+import { adminRouter } from "./admin/admin.routes.js";
 
 const router = Router();
 
@@ -21,5 +22,6 @@ router.delete("/delete", isUser, deleteUser);
 
 // other routes
 router.use("/vendor", vendorRouter);
+router.use("/admin", adminRouter);
 
 export const UserRouter = router;

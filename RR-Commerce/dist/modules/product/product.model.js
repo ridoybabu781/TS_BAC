@@ -1,10 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 const productSchema = new Schema({
-    productId: {
-        type: String,
-        required: true,
-        unique: true,
-    },
     seller: {
         type: Schema.Types.ObjectId,
         ref: "User",

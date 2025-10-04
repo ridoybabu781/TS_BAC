@@ -1,4 +1,4 @@
-import joi from "Joi";
+import joi from "joi";
 
 export const VCreateVendor = joi.object({
   name: joi.string().min(3).required().trim(),

@@ -15,4 +15,4 @@ router.put("/unblock", isAdmin, unBlockUser);
 router.put("/delete", isAdmin, deleteUser);
 router.put("/undelete", isAdmin, unDeleteUser);
 
-export const vendorRouter = router;
+export const adminRouter = router;

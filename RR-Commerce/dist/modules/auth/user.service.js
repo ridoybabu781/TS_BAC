@@ -10,10 +10,13 @@ const ULogin = async (email, password, next) => {
         return next(createHttpError(404, "User Not Found"));
     }
     if (user.role === "vendor" &&
-        !user.isBlocked &&
-        !user.isDeleted &&
+        user.isBlocked &&
+        user.isDeleted &&
         !user.isVendor) {
         return next(createHttpError(401, "Your'e not allowed to login"));
+    }
+    if (user.isDeleted) {
+        return next(createHttpError(400, "Your account is deleted"));
     }
     const isPassMatched = await bcrypt.compare(user.password, password);
     if (!isPassMatched) {
@@ -23,8 +26,20 @@ const ULogin = async (email, password, next) => {
     delete userData.password;
     return userData;
 };
+const UProfile = async (userId) => {
+    return await User.findById(userId).select("-password");
+};
+const UUpdate = async (id, payload) => {
+    return await User.findByIdAndUpdate(id, payload, { new: true });
+};
+const UDelete = async (id, next) => {
+    return await User.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
+};
 export const SUser = {
     UCreate,
     ULogin,
+    UProfile,
+    UUpdate,
+    UDelete,
 };
 //# sourceMappingURL=user.service.js.map
