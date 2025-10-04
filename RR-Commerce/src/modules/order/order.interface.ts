@@ -13,7 +13,7 @@ type address = {
 };
 
 export interface IOrder {
-  customer: Types.ObjectId;
+  customer?: Types.ObjectId;
   items: Item;
   totalPrice: number;
   status: "pending" | "paid" | "shipped" | "completed" | "canceled";
