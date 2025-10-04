@@ -9,6 +9,7 @@ import {
   update,
 } from "./user.controller.js";
 import { isUser } from "../../middlewares/User.js";
+import { vendorRouter } from "./vendor/vendor.routes.js";
 
 const router = Router();
 
@@ -18,4 +19,7 @@ router.put("/update", isUser, validation(VUpdate), update);
 router.get("/profile", isUser, profile);
 router.delete("/delete", isUser, deleteUser);
 
-export const UserRouter = 
+// other routes
+router.use("/vendor", vendorRouter);
+
+export const UserRouter = router;

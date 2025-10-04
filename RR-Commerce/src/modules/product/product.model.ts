@@ -3,11 +3,6 @@ import type { IProduct } from "./product.interface.js";
 
 const productSchema = new Schema<IProduct>(
   {
-    productId: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     seller: {
       type: Schema.Types.ObjectId,
       ref: "User",

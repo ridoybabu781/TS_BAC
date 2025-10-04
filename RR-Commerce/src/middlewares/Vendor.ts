@@ -2,6 +2,8 @@ import type { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import User from "../modules/auth/user.model.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const isVendor = async (
   req: Request,

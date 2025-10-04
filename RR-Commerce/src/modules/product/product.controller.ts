@@ -18,6 +18,7 @@ export const addProduct = async (
     next(error);
   }
 };
+
 export const getProducts = async (
   req: Request,
   res: Response,

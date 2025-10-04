@@ -1,16 +1,10 @@
 import joi from "Joi";
 
-const Role = ["user", "vendor", "admin"];
-
 export const VCreateUser = joi.object({
   name: joi.string().min(3).required().trim(),
   email: joi.string().email().required().lowercase(),
   password: joi.string().required().min(6),
-  role: joi
-    .string()
-    .required()
-    .valid(...Role)
-    .default("user"),
+  role: joi.string().required().valid("user"),
 });
 
 export const VLogin = joi.object({
