@@ -8,8 +8,6 @@ export const VCreateProduct = Joi.object({
     discountPrice: Joi.number().optional(),
     brand: Joi.string().optional(),
     categories: Joi.array().items(Joi.string().required()).min(1).required(),
-    rating: Joi.number().min(0).max(5).optional(),
-    reviews: Joi.array().items(Joi.string()).optional(),
 });
 export const VUpdateProduct = Joi.object({
     _id: Joi.string().required(),

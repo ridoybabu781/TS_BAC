@@ -24,9 +24,7 @@ export const isVendor = async (
 
     if (
       user.role !== "vendor" &&
-      user.isBlocked &&
-      user.isDeleted &&
-      !user.isVendor
+      (user.isBlocked || user.isDeleted || user.isVendor === "no")
     ) {
       res.clearCookie("token", {
         httpOnly: true,

@@ -11,8 +11,7 @@ const categoryModel = new Schema<ICategory>({
       type: String,
       required: true,
     },
-    iconPublicId: String,
-    required: true,
+    iconPublicId: { type: String, required: true },
   },
 });
 

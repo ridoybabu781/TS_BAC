@@ -4,5 +4,5 @@ export interface IVendor {
   companyName?: string;
   isVerified?: boolean;
   products?: Types.ObjectId;
-  isVendor?: boolean;
+  isVendor?: "yes" | "pending" | "no";
 }

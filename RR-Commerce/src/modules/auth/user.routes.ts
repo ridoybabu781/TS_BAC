@@ -20,8 +20,6 @@ router.put("/update", isUser, validation(VUpdate), update);
 router.get("/profile", isUser, profile);
 router.delete("/delete", isUser, deleteUser);
 
-// other routes
-router.use("/vendor", vendorRouter);
-router.use("/admin", adminRouter);
+
 
 export const UserRouter = router;

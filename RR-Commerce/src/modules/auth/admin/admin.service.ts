@@ -3,9 +3,12 @@ import type { IBaseUser } from "../user.interface.js";
 import User from "../user.model.js";
 import createHttpError from "http-errors";
 import { sendMail } from "../../../utils/sendMail.js";
+import bcrypt from "bcrypt";
 
 const ACreate = async (payload: IBaseUser) => {
-  return await User.create(payload);
+  const hashedPass = await bcrypt.hash(payload.password, 10);
+
+  return await User.create({ ...payload, password: hashedPass });
 };
 
 const ABlock = async (id: string, next: NextFunction) => {

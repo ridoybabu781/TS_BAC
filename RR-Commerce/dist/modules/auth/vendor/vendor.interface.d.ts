@@ -3,6 +3,6 @@ export interface IVendor {
     companyName?: string;
     isVerified?: boolean;
     products?: Types.ObjectId;
-    isVendor?: boolean;
+    isVendor?: "yes" | "pending" | "no";
 }
 //# sourceMappingURL=vendor.interface.d.ts.map

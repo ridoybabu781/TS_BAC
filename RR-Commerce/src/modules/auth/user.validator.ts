@@ -14,17 +14,15 @@ export const VLogin = joi.object({
 
 export const VUpdate = joi.object({
   name: joi.string().min(3).required().trim(),
-  email: joi.string().email().required().lowercase(),
-  password: joi.string().required().min(6),
-  sector: joi.string(),
+  sector: joi.string().optional(),
   address: joi.object({
     street: joi.string(),
     city: joi.string(),
     state: joi.string(),
     country: joi.string(),
     zip: joi.string(),
-  }),
-  phone: joi.number().min(8).max(14),
+  }).optional,
+  phone: joi.number().min(8).max(14).optional(),
   countryCode: joi.string(),
   companyName: joi.string(),
   products: joi.array(),

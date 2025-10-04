@@ -13,6 +13,12 @@ export const createUser = async (
 ) => {
   try {
     const user = await SUser.UCreate(req.body);
+    if (!user) {
+      return next(createHttpError(400, "User creation failed"));
+    }
+    res
+      .status(201)
+      .json({ message: "User Created Successfully, Go to login page" });
   } catch (error) {
     next(error);
   }
@@ -25,10 +31,14 @@ export const login = async (
 ) => {
   try {
     const { email, password } = req.body;
-    const user = await SUser.ULogin(email as string, password as string, next);
+    const user = await SUser.ULogin(
+      email as string,
+      password as string,
+      next as NextFunction
+    );
 
     if (!user) {
-      return next(createHttpError(404, "User Fetching Error"));
+      return;
     }
 
     const token = jwt.sign(
@@ -73,11 +83,7 @@ export const update = async (
   next: NextFunction
 ) => {
   try {
-    const updatedUser = await SUser.UUpdate(
-      req.userId,
-      req.body as IBaseUser,
-      next
-    );
+    const updatedUser = await SUser.UUpdate(req.userId, req.body as IBaseUser);
     if (!updatedUser) {
       return next(createHttpError(400, "User Updation failed"));
     }

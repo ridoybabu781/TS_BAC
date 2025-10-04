@@ -1,6 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 import { AService } from "./admin.service.js";
 import createHttpError from "http-errors";
+import User from "../user.model.js";
+import { sendMail } from "../../../utils/sendMail.js";
 
 export const createAdmin = async (
   req: Request,
@@ -13,9 +15,53 @@ export const createAdmin = async (
       return next(createHttpError(400, "Vendor Creation Failed"));
     }
     res.status(201).json({
-      message:
-        "Vendor creation request successfull, please wait for verification",
+      message: "Admin creation request successfull",
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const approveVendor = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const approveVendor = await User.findByIdAndUpdate(
+      req.params.id,
+      { isVendor: "yes" },
+      { new: true }
+    );
+    if (!approveVendor) {
+      return next(createHttpError(400, "Vendor not found"));
+    }
+
+    res.status(200).json({ message: "Vendor request Approved" });
+
+    await sendMail(approveVendor.email, "Vendor Request Approved", ``);
+  } catch (error) {
+    next(error);
+  }
+};
+export const rejectVendor = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const rejectedVendor = await User.findByIdAndUpdate(
+      req.params.id,
+      { isVendor: "no" },
+      { new: true }
+    );
+    if (!rejectedVendor) {
+      return next(createHttpError(400, "Vendor not found"));
+    }
+
+    res.status(200).json({ message: "Vendor request Rejected" });
+
+    await sendMail(rejectedVendor.email, "Vendor Request Rejected", ``);
   } catch (error) {
     next(error);
   }

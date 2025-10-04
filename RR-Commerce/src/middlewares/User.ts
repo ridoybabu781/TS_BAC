@@ -2,8 +2,8 @@ import type { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import User from "../modules/auth/user.model.js";
-import dotenv from "dotenv"
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 
 export const isUser = async (
   req: Request,
@@ -12,6 +12,7 @@ export const isUser = async (
 ) => {
   try {
     const token = req.cookies.token;
+
     if (!token) {
       return next(createHttpError("Unauthorized"));
     }

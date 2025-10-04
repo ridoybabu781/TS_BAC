@@ -15,9 +15,7 @@ export const isVendor = async (req, res, next) => {
             return next(createHttpError(404, "User not found"));
         }
         if (user.role !== "vendor" &&
-            user.isBlocked &&
-            user.isDeleted &&
-            !user.isVendor) {
+            (user.isBlocked || user.isDeleted || user.isVendor === "no")) {
             res.clearCookie("token", {
                 httpOnly: true,
                 secure: false,

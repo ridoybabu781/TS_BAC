@@ -1,8 +1,10 @@
 import User from "../user.model.js";
 import createHttpError from "http-errors";
 import { sendMail } from "../../../utils/sendMail.js";
+import bcrypt from "bcrypt";
 const VCreate = async (payload) => {
-    return await User.create(payload);
+    const hashedPass = await bcrypt.hash(payload.password, 10);
+    return await User.create({ ...payload, password: hashedPass });
 };
 const VBlock = async (id, next) => {
     const user = await User.findById(id);

@@ -22,8 +22,8 @@ const userModel = new Schema({
         required: true,
     },
     profileImg: String,
-    isBlocked: Boolean,
-    isDeleted: Boolean,
+    isBlocked: { type: Boolean, default: false },
+    isDeleted: { type: Boolean, default: false },
     sector: String,
     address: {
         street: String,
@@ -45,8 +45,9 @@ const userModel = new Schema({
         },
     ],
     isVendor: {
-        type: Boolean,
-        default: false,
+        type: String,
+        enum: ["yes", "pending", "no"],
+        default: "pending",
     },
 });
 const User = model("User", userModel);

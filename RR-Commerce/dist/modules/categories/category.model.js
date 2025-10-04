@@ -9,8 +9,7 @@ const categoryModel = new Schema({
             type: String,
             required: true,
         },
-        iconPublicId: String,
-        required: true,
+        iconPublicId: { type: String, required: true },
     },
 });
 export const Category = model("Category", categoryModel);

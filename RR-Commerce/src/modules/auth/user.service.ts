@@ -5,20 +5,20 @@ import createHttpError from "http-errors";
 import bcrypt from "bcrypt";
 
 const UCreate = async (payload: IBaseUser) => {
-  return await User.create(payload);
+  const hashedPass = await bcrypt.hash(payload.password, 10);
+
+  return await User.create({ ...payload, password: hashedPass });
 };
 
 const ULogin = async (email: String, password: String, next: NextFunction) => {
-  const user = await User.findOne(email);
+  const user = await User.findOne({ email });
   if (!user) {
     return next(createHttpError(404, "User Not Found"));
   }
 
   if (
     user.role === "vendor" &&
-    user.isBlocked &&
-    user.isDeleted &&
-    !user.isVendor
+    (user.isBlocked || user.isDeleted || user.isVendor !== "yes")
   ) {
     return next(createHttpError(401, "Your'e not allowed to login"));
   }
@@ -28,9 +28,10 @@ const ULogin = async (email: String, password: String, next: NextFunction) => {
   }
 
   const isPassMatched: boolean = await bcrypt.compare(
-    user.password,
-    password as string
+    password as string,
+    user.password
   );
+
   if (!isPassMatched) {
     return next(createHttpError(400, "Password didn't matched"));
   }
@@ -47,7 +48,7 @@ const UProfile = async (userId: string) => {
 const UUpdate = async (id: string, payload: IBaseUser) => {
   return await User.findByIdAndUpdate(id, payload, { new: true });
 };
-const UDelete = async (id: string, next: NextFunction) => {
+const UDelete = async (id: string) => {
   return await User.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
 };
 

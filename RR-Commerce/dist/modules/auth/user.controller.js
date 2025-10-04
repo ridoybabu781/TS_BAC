@@ -6,6 +6,12 @@ dotenv.config();
 export const createUser = async (req, res, next) => {
     try {
         const user = await SUser.UCreate(req.body);
+        if (!user) {
+            return next(createHttpError(400, "User creation failed"));
+        }
+        res
+            .status(201)
+            .json({ message: "User Created Successfully, Go to login page" });
     }
     catch (error) {
         next(error);
@@ -16,7 +22,7 @@ export const login = async (req, res, next) => {
         const { email, password } = req.body;
         const user = await SUser.ULogin(email, password, next);
         if (!user) {
-            return next(createHttpError(404, "User Fetching Error"));
+            return;
         }
         const token = jwt.sign({ id: user._id, email }, process.env.JWT_SECRET, { expiresIn: "1h" });
         res
@@ -46,7 +52,7 @@ export const profile = async (req, res, next) => {
 };
 export const update = async (req, res, next) => {
     try {
-        const updatedUser = await SUser.UUpdate(req.userId, req.body, next);
+        const updatedUser = await SUser.UUpdate(req.userId, req.body);
         if (!updatedUser) {
             return next(createHttpError(400, "User Updation failed"));
         }
