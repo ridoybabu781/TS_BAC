@@ -87,3 +87,25 @@ export const update = async (
     next(error);
   }
 };
+
+export const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.userId;
+
+    const deletedUser = await SUser.UDelete(id);
+    if (!deleteUser) {
+      return next(
+        createHttpError(400).json({
+          message: "User Deletion Failed",
+          deleteUser,
+        })
+      );
+    }
+  } catch (error) {
+    next(error);
+  }
+};

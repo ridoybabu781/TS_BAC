@@ -16,11 +16,15 @@ const ULogin = async (email: String, password: String, next: NextFunction) => {
 
   if (
     user.role === "vendor" &&
-    !user.isBlocked &&
-    !user.isDeleted &&
+    user.isBlocked &&
+    user.isDeleted &&
     !user.isVendor
   ) {
     return next(createHttpError(401, "Your'e not allowed to login"));
+  }
+
+  if (user.isDeleted) {
+    return next(createHttpError(400, "Your account is deleted"));
   }
 
   const isPassMatched: boolean = await bcrypt.compare(
@@ -40,8 +44,11 @@ const ULogin = async (email: String, password: String, next: NextFunction) => {
 const UProfile = async (userId: string) => {
   return await User.findById(userId).select("-password");
 };
-const UUpdate = async (id: string, payload: IBaseUser, next: NextFunction) => {
+const UUpdate = async (id: string, payload: IBaseUser) => {
   return await User.findByIdAndUpdate(id, payload, { new: true });
+};
+const UDelete = async (id: string, next: NextFunction) => {
+  return await User.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
 };
 
 export const SUser = {
@@ -49,4 +56,5 @@ export const SUser = {
   ULogin,
   UProfile,
   UUpdate,
+  UDelete,
 };
