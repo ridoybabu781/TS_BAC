@@ -48,8 +48,23 @@ const SGetDesign = async (id: string) => {
   return await Design.findById(id);
 };
 
+const SDeleteDesign = async (id: string, next: NextFunction) => {
+  const design = await Design.findById(id);
+
+  if (!design) {
+    return next(createHttpError(404, "Design not found"));
+  }
+
+  await cloud.uploader.destroy(
+    `bac_portfolio/design/${design?.image?.imagePublicId}`
+  );
+
+  return await Design.findByIdAndDelete(id);
+};
+
 export const DService = {
   SCreateDesign,
   SGetDesigns,
   SGetDesign,
+  SDeleteDesign,
 };

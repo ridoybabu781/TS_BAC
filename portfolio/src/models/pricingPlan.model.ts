@@ -1,5 +1,5 @@
-import { Schema } from "mongoose";
-import { IPricing } from "../interfaces/pricingPlan.interface.js";
+import { model, Schema } from "mongoose";
+import type { IPricing } from "../interfaces/pricingPlan.interface.js";
 
 const PricingSchema = new Schema<IPricing>({
   name: {
@@ -22,3 +22,5 @@ const PricingSchema = new Schema<IPricing>({
     required: true,
   },
 });
+
+export const Pricing = model("Pricing", PricingSchema);

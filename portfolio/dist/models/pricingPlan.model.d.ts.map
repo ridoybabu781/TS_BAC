@@ -1,1 +1,1 @@
-{"version":3,"file":"pricingPlan.model.d.ts","sourceRoot":"","sources":["../../src/models/pricingPlan.model.ts"],"names":[],"mappings":""}
+{"version":3,"file":"pricingPlan.model.d.ts","sourceRoot":"","sources":["../../src/models/pricingPlan.model.ts"],"names":[],"mappings":"AAAA,OAAO,EAAS,MAAM,EAAE,MAAM,UAAU,CAAC;AACzC,OAAO,KAAK,EAAE,QAAQ,EAAE,MAAM,wCAAwC,CAAC;AAwBvE,eAAO,MAAM,OAAO;;;;;;;;;;;;GAAkC,CAAC"}

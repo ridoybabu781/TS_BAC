@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import { handleError } from "./middlewares/handleError.js";
 import { UserRouter } from "./routes/user.routes.js";
 import { AdminRouter } from "./routes/admin.routes.js";
+import { DesignRouter } from "./routes/design.routes.js";
+import { CategoryRouter } from "./routes/category.routes.js";
 
 const app: Application = express();
 
@@ -14,6 +16,8 @@ app.use(cookieParser());
 //routing
 app.use("/api/auth", UserRouter);
 app.use("/api/admin", AdminRouter);
+app.use("/api/design", DesignRouter);
+app.use("/api/category", CategoryRouter);
 
 //global error
 app.use(handleError);

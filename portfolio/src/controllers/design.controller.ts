@@ -52,3 +52,19 @@ export const getDesign = async (
     next(error);
   }
 };
+
+export const deleteDesign = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const design = await DService.SDeleteDesign(req.params.id as string,next as NextFunction);
+    if (!design) {
+      return next(createHttpError(400, "Design deletion failed"));
+    }
+    res.status(201).json({ message: "Design deleted successfully"});
+  } catch (error) {
+    next(error);
+  }
+};

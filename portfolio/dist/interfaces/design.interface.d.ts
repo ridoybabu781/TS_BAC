@@ -1,5 +1,6 @@
 import type { Types } from "mongoose";
 export interface IDesign {
+    _id?: Types.ObjectId;
     title: string;
     description: string;
     category: Types.ObjectId;

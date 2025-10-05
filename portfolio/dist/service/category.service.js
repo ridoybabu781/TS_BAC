@@ -8,7 +8,7 @@ const Add = async (req, payload, next) => {
     }
     const iconUploadStream = (buffer) => {
         return new Promise((resolve, reject) => {
-            const stream = cloud.uploader.upload_stream({ folder: "bac_commerce/categoryIcon" }, (err, data) => {
+            const stream = cloud.uploader.upload_stream({ folder: "bac_portfolio/categoryIcon" }, (err, data) => {
                 if (data)
                     resolve(data);
                 else
@@ -28,7 +28,7 @@ const Get = async () => {
 const Delete = async (id) => {
     const category = await Category.findById(id);
     const iconPublicId = category?.icon.iconPublicId;
-    await cloud.uploader.destroy(`bac_commerce/categoryIcon/${iconPublicId}`);
+    await cloud.uploader.destroy(`bac_portfolio/categoryIcon/${iconPublicId}`);
     return await Category.findByIdAndDelete(id);
 };
 export const CService = { Add, Get, Delete };

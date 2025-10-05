@@ -33,9 +33,18 @@ const SGetDesigns = async () => {
 const SGetDesign = async (id) => {
     return await Design.findById(id);
 };
+const SDeleteDesign = async (id, next) => {
+    const design = await Design.findById(id);
+    if (!design) {
+        return next(createHttpError(404, "Design not found"));
+    }
+    await cloud.uploader.destroy(`bac_portfolio/design/${design?.image?.imagePublicId}`);
+    return await Design.findByIdAndDelete(id);
+};
 export const DService = {
     SCreateDesign,
     SGetDesigns,
     SGetDesign,
+    SDeleteDesign,
 };
 //# sourceMappingURL=design.service.js.map

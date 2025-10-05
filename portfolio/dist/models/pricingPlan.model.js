@@ -1,5 +1,4 @@
-import { Schema } from "mongoose";
-import { IPricing } from "../interfaces/pricingPlan.interface.js";
+import { model, Schema } from "mongoose";
 const PricingSchema = new Schema({
     name: {
         type: String,
@@ -21,4 +20,5 @@ const PricingSchema = new Schema({
         required: true,
     },
 });
+export const Pricing = model("Pricing", PricingSchema);
 //# sourceMappingURL=pricingPlan.model.js.map

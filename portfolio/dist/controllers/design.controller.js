@@ -36,4 +36,16 @@ export const getDesign = async (req, res, next) => {
         next(error);
     }
 };
+export const deleteDesign = async (req, res, next) => {
+    try {
+        const design = await DService.SDeleteDesign(req.params.id, next);
+        if (!design) {
+            return next(createHttpError(400, "Design deletion failed"));
+        }
+        res.status(201).json({ message: "Design deleted successfully" });
+    }
+    catch (error) {
+        next(error);
+    }
+};
 //# sourceMappingURL=design.controller.js.map
