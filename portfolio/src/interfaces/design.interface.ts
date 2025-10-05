@@ -4,7 +4,10 @@ export interface IDesign {
   title: string;
   description: string;
   category: Types.ObjectId;
-  image: string;
+  image: {
+    imageUrl: string;
+    imagePublicId: string;
+  };
   designerName: string;
   usedTools: string[];
   effectsUsed: string[];
