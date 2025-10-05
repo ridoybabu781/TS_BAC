@@ -14,7 +14,9 @@ const SCreateOrder = async (req, payload, next) => {
 const SGetMyOrders = async (req) => {
     return await Order.find({ customer: req.userId });
 };
-const SUpdateOrderStatus = async (req, status, next) => { };
+const SUpdateOrderStatus = async (req, status, next) => {
+    const order = await Order.findByIdAndUpdate();
+};
 export const SOrder = {
     SCreateOrder,
     SGetMyOrders,

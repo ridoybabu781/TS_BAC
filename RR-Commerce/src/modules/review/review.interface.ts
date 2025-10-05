@@ -1,10 +1,10 @@
-import type { Types } from "mongoose";
+import type { Document, Types } from "mongoose";
 
-export interface IReview {
-  _id?: string;
+export interface IReview extends Document {
   reviewer: Types.ObjectId;
+  product: Types.ObjectId;
   rating: number;
-  description: string;
+  comment: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

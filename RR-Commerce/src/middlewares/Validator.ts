@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
 
-export const validation = (schema) => {
+export const Va = (schema) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const result = schema.validate(req.body, {
       abortEarly: false,

@@ -1,6 +1,5 @@
-import type { Types } from "mongoose";
-export interface IProduct {
-    _id?: string;
+import type { Document, Types } from "mongoose";
+export interface IProduct extends Document {
     seller: Types.ObjectId;
     slag: string;
     productId?: string;

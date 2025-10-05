@@ -7,6 +7,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { vendorRouter } from "./modules/auth/vendor/vendor.routes.js";
 import { adminRouter } from "./modules/auth/admin/admin.routes.js";
+import { CartRouter } from "./modules/cart/cart.routes.js";
+import { ReviewRouter } from "./modules/review/review.routes.js";
 
 const app: Application = express();
 
@@ -27,6 +29,8 @@ app.use("/api/product", ProductRouter);
 app.use("/api/category", CategoryRouter);
 app.use("/api/vendor", vendorRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/cart", CartRouter);
+app.use("/api/review", ReviewRouter);
 
 // global error
 app.use(handleError);

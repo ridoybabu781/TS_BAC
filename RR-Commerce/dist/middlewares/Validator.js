@@ -1,5 +1,5 @@
 import createHttpError from "http-errors";
-export const validation = (schema) => {
+export const Va = (schema) => {
     return (req, res, next) => {
         const result = schema.validate(req.body, {
             abortEarly: false,

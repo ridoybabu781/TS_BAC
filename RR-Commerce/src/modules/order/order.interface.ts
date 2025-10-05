@@ -1,4 +1,4 @@
-import type { Types } from "mongoose";
+import type { Document, Types } from "mongoose";
 
 type Item = {
   products: Types.ObjectId[];
@@ -12,7 +12,7 @@ type address = {
   postalCode: string;
 };
 
-export interface IOrder {
+export interface IOrder extends Document {
   customer?: Types.ObjectId;
   items: Item;
   totalPrice: number;
