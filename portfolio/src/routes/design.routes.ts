@@ -12,6 +12,6 @@ const router = Router();
 router.post("/createDesign", isAdmin, upload.single("image"), createDesign);
 router.get("/", getDesigns);
 router.get("/:id", getDesign);
-router.delete("/:id", deleteDesign);
+router.delete("/:id", isAdmin, deleteDesign);
 
 export const DesignRouter = router;
