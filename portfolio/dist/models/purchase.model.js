@@ -21,7 +21,10 @@ const purchaseSchema = new Schema({
         required: true,
         default: "pending",
     },
-    purchaseDate: Date.now(),
+    purchaseDate: {
+        type: Date,
+        default: Date.now,
+    },
 });
 export const Purchase = model("Purchase", purchaseSchema);
 //# sourceMappingURL=purchase.model.js.map

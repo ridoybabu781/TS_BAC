@@ -19,7 +19,7 @@ export const isAdmin = async (req, res, next) => {
                 httpOnly: true,
                 secure: false,
             });
-            return next(createHttpError(401, "You're not allowed to fetch data"));
+            return next(createHttpError(401, "You're not allowed to do the work"));
         }
         req.adminId = user._id;
         next();

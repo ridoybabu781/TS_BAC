@@ -1,4 +1,3 @@
-
 # 🎨 Design Portfolio Backend
 
 This is a **portfolio-type website backend** built with **Node.js, Express, and MongoDB (Mongoose)**.
@@ -14,6 +13,7 @@ It allows users to explore and purchase designs, leave reviews, and manage profi
 **File Uploads:** Multer + Cloudinary
 **Error Handling:** Custom error handler middleware
 **Authorization:** Role-based (Admin / User)
+**Validation:** Joi
 
 ---
 
@@ -112,11 +112,11 @@ src/
 
 **Base URL:** `/api/category`
 
-| Method | Route     | Description        |
-| ------ | --------- | ------------------ |
-| POST   | `/create` | Create category    |
-| GET    | `/`       | Get all categories |
-| DELETE   | `/delete/:id` | Create category    |
+| Method | Route         | Description        |
+| ------ | ------------- | ------------------ |
+| POST   | `/create`     | Create category    |
+| GET    | `/`           | Get all categories |
+| DELETE | `/delete/:id` | Create category    |
 
 ---
 
@@ -158,17 +158,17 @@ src/
 
 ## 🔐 Authentication & Authorization
 
-* **JWT** is used for authentication.
-* **bcrypt** for password hashing.
-* **cookie-parser** to store and access tokens in cookies.
-* **Role-based Access Control (RBAC)** ensures only admins can manage content.
+- **JWT** is used for authentication.
+- **bcrypt** for password hashing.
+- **cookie-parser** to store and access tokens in cookies.
+- **Role-based Access Control (RBAC)** ensures only admins can manage content.
 
 ---
 
 ## 🖼️ Image Management
 
-* **Multer** handles image upload from forms.
-* **Cloudinary** stores images online.
+- **Multer** handles image upload from forms.
+- **Cloudinary** stores images online.
 
 ---
 
@@ -176,11 +176,10 @@ src/
 
 The project uses a **custom error handler middleware** to handle:
 
-* Validation errors
-* Authentication failures
-* File upload issues
-* Database and server errors
-
+- Validation errors
+- Authentication failures
+- File upload issues
+- Database and server errors
 
 ---
 

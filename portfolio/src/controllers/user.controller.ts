@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express";
 import { UService } from "../service/user.service.js";
 import createHttpError from "http-errors";
 import { configDotenv } from "dotenv";
+import type { IUser } from "../interfaces/user.interface.js";
 configDotenv();
 
 export const createUser = async (
@@ -11,7 +12,10 @@ export const createUser = async (
   next: NextFunction
 ) => {
   try {
-    const user = await UService.UCreate(req.body);
+    const user = await UService.UCreate(
+      req.body as IUser,
+      next as NextFunction
+    );
     if (!user) {
       return next(createHttpError(400, "User creation failed"));
     }

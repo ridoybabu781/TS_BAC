@@ -22,7 +22,10 @@ const reviewModel = new Schema<IReview>({
     type: String,
     required: true,
   },
-  createdAt: Date.now(),
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 export const Review = model("Review", reviewModel);

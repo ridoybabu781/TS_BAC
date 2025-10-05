@@ -1,7 +1,10 @@
 import bcrypt from "bcrypt";
 import { User } from "../models/user.model.js";
 import createHttpError from "http-errors";
-const UCreate = async (payload) => {
+const UCreate = async (payload, next) => {
+    if (payload.role === "admin") {
+        return next(createHttpError(401, "Admin cannot be created with this api"));
+    }
     const hashedPass = await bcrypt.hash(payload.password, 10);
     return await User.create({ ...payload, password: hashedPass });
 };

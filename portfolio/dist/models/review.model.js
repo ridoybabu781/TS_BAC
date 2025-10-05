@@ -20,7 +20,10 @@ const reviewModel = new Schema({
         type: String,
         required: true,
     },
-    createdAt: Date.now(),
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 export const Review = model("Review", reviewModel);
 //# sourceMappingURL=review.model.js.map

@@ -7,7 +7,7 @@ if (!CNAME || !CAPI_KEY || !CAPI_SECRET) {
     throw new Error("Missing required Cloudinary environment variables.");
 }
 cloud.config({
-    cname: CNAME,
+    cloud_name: CNAME,
     api_key: CAPI_KEY,
     api_secret: CAPI_SECRET,
 });

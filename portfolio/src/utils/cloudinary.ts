@@ -10,7 +10,7 @@ if (!CNAME || !CAPI_KEY || !CAPI_SECRET) {
 }
 
 cloud.config({
-  cname: CNAME,
+  cloud_name: CNAME,
   api_key: CAPI_KEY,
   api_secret: CAPI_SECRET,
 });

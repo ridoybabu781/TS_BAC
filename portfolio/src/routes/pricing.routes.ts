@@ -6,10 +6,12 @@ import {
   getPricing,
   getPricings,
 } from "../controllers/pricing.controller.js";
+import { Validator } from "../middlewares/validator.js";
+import { VPricingSchema } from "../validators/pricing.validator.js";
 
 const router = Router();
 
-router.post("/addPricing", isAdmin, createPricing);
+router.post("/addPricing", isAdmin, Validator(VPricingSchema), createPricing);
 router.get("/", getPricings);
 router.get("/:id", getPricing);
 router.delete("/:id", isAdmin, deletePricing);

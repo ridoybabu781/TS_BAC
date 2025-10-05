@@ -23,7 +23,10 @@ const purchaseSchema = new Schema<IPurchase>({
     required: true,
     default: "pending",
   },
-  purchaseDate: Date.now(),
+  purchaseDate: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 export const Purchase = model("Purchase", purchaseSchema);

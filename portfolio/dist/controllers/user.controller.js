@@ -5,7 +5,7 @@ import { configDotenv } from "dotenv";
 configDotenv();
 export const createUser = async (req, res, next) => {
     try {
-        const user = await UService.UCreate(req.body);
+        const user = await UService.UCreate(req.body, next);
         if (!user) {
             return next(createHttpError(400, "User creation failed"));
         }
