@@ -36,7 +36,7 @@ export const getMyOrders = async (
     if (!myOrders) {
       return next(createHttpError(404, "No order found"));
     }
-    res.status(200).json({ message: "Order fetched successfully" });
+    res.status(200).json({ message: "Order fetched successfully", myOrders });
   } catch (error) {
     next(error);
   }
@@ -49,10 +49,13 @@ export const updateOrderStatus = async (
 ) => {
   try {
     const updatedOrder = await SOrder.SUpdateOrderStatus(
-      req,
+      req as Request,
       req.body.status,
-      next
+      next as NextFunction
     );
+    if (!updatedOrder) {
+      return next()
+    }
   } catch (error) {
     next(error);
   }
