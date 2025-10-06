@@ -15,7 +15,7 @@ export interface IProduct extends Document {
     imagePublicIds: string[];
   };
   brand?: string;
-  categories: string[];
+  category: string;
   rating?: number;
   reviews?: Types.ObjectId[];
   createdAt?: Date;

@@ -44,8 +44,47 @@ const Add = async (req: Request, payload: IProduct, next: NextFunction) => {
   });
 };
 
-const Get = async () => {
-  return await Product.find();
+const Get = async (req: Request) => {
+  const {
+    pageNumber = 1,
+    limit = 20,
+    minPrice,
+    maxPrice,
+    search = "",
+    category,
+  } = req.query;
+
+  let query = {};
+
+  const page = Number(pageNumber);
+  const pageSize = Number(limit);
+  if (search) {
+    const regex = new RegExp(search, "i");
+    query = { $or: [{ name: regex }, { description: regex }] };
+  }
+
+  if (minPrice || maxPrice) {
+    query.price = {};
+    if (minPrice) query.price.$gte = Number(minPrice);
+    if (maxPrice) query.price.$lte = Number(maxPrice);
+  }
+
+  if (category) {
+    query.category = category;
+  }
+
+  const totalProduct = await Product.countDocuments(query);
+  const result = await Product.find(query)
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .sort({ createdAt: -1 });
+  return {
+    products: result,
+    success: true,
+    totalProduct,
+    totalPages: Math.ceil(totalProduct / pageSize),
+    currentPage: page,
+  };
 };
 
 const GetOne = async (id: string) => {

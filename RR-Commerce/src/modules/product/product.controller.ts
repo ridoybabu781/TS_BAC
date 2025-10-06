@@ -25,11 +25,16 @@ export const getProducts = async (
   next: NextFunction
 ) => {
   try {
-    const products = await PService.Get();
-    if (!products) {
+    const result = await PService.Get(req as Request);
+    if (result.products.length === 0) {
       return res.status(404).json({ message: "Product Not Found" });
     }
-    res.status(200).json({ message: "Product fetched successfully", products });
+    res
+      .status(200)
+      .json({
+        message: "Product fetched successfully",
+        products: result.products,
+      });
   } catch (error) {
     next(error);
   }

@@ -6,11 +6,17 @@ export declare const PService: {
     }> & {
         __v: number;
     })>;
-    Get: () => Promise<(import("mongoose").Document<unknown, {}, IProduct, {}, import("mongoose").DefaultSchemaOptions> & IProduct & Required<{
-        _id: unknown;
-    }> & {
-        __v: number;
-    })[]>;
+    Get: (req: Request) => Promise<{
+        products: (import("mongoose").Document<unknown, {}, IProduct, {}, import("mongoose").DefaultSchemaOptions> & IProduct & Required<{
+            _id: unknown;
+        }> & {
+            __v: number;
+        })[];
+        success: boolean;
+        totalProduct: number;
+        totalPages: number;
+        currentPage: number;
+    }>;
     GetOne: (id: string) => Promise<(import("mongoose").Document<unknown, {}, IProduct, {}, import("mongoose").DefaultSchemaOptions> & IProduct & Required<{
         _id: unknown;
     }> & {

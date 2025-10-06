@@ -37,12 +37,11 @@ const productSchema = new Schema<IProduct>(
       ],
     },
     brand: String,
-    categories: [
-      {
-        type: String,
-        required: true,
-      },
-    ],
+    category: {
+      type: String,
+      required: true,
+    },
+
     rating: Number,
 
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
