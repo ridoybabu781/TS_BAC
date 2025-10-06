@@ -6,7 +6,7 @@ configDotenv();
 const SPayBill = async (req, res, next) => {
     try {
         const userId = req.userId;
-        const orderId = req.params.orderId;
+        const orderId = req.params.id;
         const order = await Order.findOne({
             _id: orderId,
             customer: userId,

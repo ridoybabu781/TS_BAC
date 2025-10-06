@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { validation } from "../../middlewares/Validator.js";
+
 import { VCreateUser, VLogin, VUpdate } from "./user.validator.js";
 import {
   createUser,
@@ -11,6 +11,7 @@ import {
 import { isUser } from "../../middlewares/User.js";
 import { vendorRouter } from "./vendor/vendor.routes.js";
 import { adminRouter } from "./admin/admin.routes.js";
+import { validation } from "../../middlewares/Validator.js";
 
 const router = Router();
 
@@ -19,7 +20,5 @@ router.post("/login", validation(VLogin), login);
 router.put("/update", isUser, validation(VUpdate), update);
 router.get("/profile", isUser, profile);
 router.delete("/delete", isUser, deleteUser);
-
-
 
 export const UserRouter = router;

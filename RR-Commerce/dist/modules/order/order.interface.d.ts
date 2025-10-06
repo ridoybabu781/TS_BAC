@@ -1,9 +1,5 @@
 import type { Document, Types } from "mongoose";
-type Item = {
-    products: Types.ObjectId[];
-    qty: number;
-    price: number;
-};
+import type { cartItem } from "../cart/cart.interface.js";
 type address = {
     street: string;
     city: string;
@@ -12,7 +8,7 @@ type address = {
 };
 export interface IOrder extends Document {
     customer?: Types.ObjectId;
-    items: Item;
+    items: cartItem;
     totalPrice: number;
     status: "pending" | "paid" | "shipped" | "completed" | "canceled";
     paymentMethod: "cod" | "sslcommerz";

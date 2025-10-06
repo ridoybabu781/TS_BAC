@@ -1,8 +1,7 @@
-import { required } from "joi";
 import { model, Schema } from "mongoose";
 import type { ICart } from "./cart.interface.js";
 
-const cartItemSchema = new Schema(
+export const cartItemSchema = new Schema(
   {
     product: { type: Schema.Types.ObjectId, required: true, ref: "Product" },
     qty: { type: Number, required: true },

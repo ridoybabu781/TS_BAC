@@ -2,7 +2,6 @@ import type { NextFunction, Request, Response } from "express";
 import { SOrder } from "./order.service.js";
 import type { IOrder } from "./order.interface.js";
 import createHttpError from "http-errors";
-import { sendMail } from "../../utils/sendMail.js";
 
 export const createOrder = async (
   req: Request,

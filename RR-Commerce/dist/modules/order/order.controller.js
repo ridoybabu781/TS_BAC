@@ -1,6 +1,5 @@
 import { SOrder } from "./order.service.js";
 import createHttpError from "http-errors";
-import { sendMail } from "../../utils/sendMail.js";
 export const createOrder = async (req, res, next) => {
     try {
         const result = await SOrder.SCreateOrder(req.body, req, next);

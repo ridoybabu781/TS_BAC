@@ -12,7 +12,7 @@ const SCreateOrder = async (
   next: NextFunction
 ) => {
   const userId = req.userId;
-  const user: IBaseUser | null = await User.findById(userId);
+  const user = await User.findById(userId);
   if (!user || user.role !== "user") {
     return next(createHttpError(400, "User Not Allowed to order"));
   }

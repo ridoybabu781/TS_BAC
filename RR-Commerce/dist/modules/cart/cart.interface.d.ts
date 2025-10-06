@@ -1,5 +1,5 @@
 import type { Document, Types } from "mongoose";
-interface cartItem {
+export interface cartItem {
     product: Types.ObjectId;
     qty: number;
     price: number;
@@ -11,5 +11,4 @@ export interface ICart extends Document {
     createdAt: Date;
     updatedAt: Date;
 }
-export {};
 //# sourceMappingURL=cart.interface.d.ts.map

@@ -9,7 +9,7 @@ configDotenv();
 const SPayBill = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userId = req.userId;
-    const orderId = req.params.orderId;
+    const orderId = req.params.id;
 
     const order = await Order.findOne({
       _id: orderId,

@@ -1,11 +1,11 @@
 import { model, Schema } from "mongoose";
-import { required } from "joi";
+import { cartItemSchema } from "../cart/cart.model.js";
 const OrderSchema = new Schema({
     customer: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     items: {
-        products: { type: Schema.Types.ObjectId, ref: "Product", required: true },
-        price: { type: Number, required: true },
-        qty: { type: Number, required: true, default: 1 },
+        type: [cartItemSchema],
+        required: true,
+        default: [],
     },
     totalPrice: { type: Number, required: true },
     status: {

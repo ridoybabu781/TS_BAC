@@ -1,6 +1,6 @@
 import type { Document, Types } from "mongoose";
 
-interface cartItem {
+export interface cartItem {
   product: Types.ObjectId;
   qty: number;
   price: number;
