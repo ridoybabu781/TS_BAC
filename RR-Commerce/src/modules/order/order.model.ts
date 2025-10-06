@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import type { IOrder } from "./order.interface.js";
+import { required } from "joi";
 
 const OrderSchema = new Schema<IOrder>(
   {
@@ -16,17 +17,30 @@ const OrderSchema = new Schema<IOrder>(
       enum: ["pending", "paid", "shipped", "completed", "canceled"],
       default: "pending",
     },
+
     paymentMethod: {
       type: String,
       enum: ["cod", "sslcommerz"],
       default: "cod",
       required: true,
     },
+
     shippingAddress: {
       street: { type: String, required: true },
       city: { type: String, required: true },
       country: { type: String, required: true },
       postalCode: { type: String, required: true },
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    
+    transactionId: { type: String },
+    paymentStatus: {
+      type: String,
+      enum: ["unpaid", "paid", "failed"],
+      default: "unpaid",
     },
   },
   { timestamps: true }

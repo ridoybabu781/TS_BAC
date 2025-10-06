@@ -1,4 +1,4 @@
-import type { NextFunction, Request } from "express";
+import type { NextFunction, Request, Response } from "express";
 import type { IOrder } from "./order.interface.js";
 import User from "../auth/user.model.js";
 import type { IBaseUser } from "../auth/user.interface.js";
@@ -7,8 +7,8 @@ import { Order } from "./order.model.js";
 import { sendMail } from "../../utils/sendMail.js";
 
 const SCreateOrder = async (
-  req: Request,
   payload: IOrder,
+  req: Request,
   next: NextFunction
 ) => {
   const userId = req.userId;
@@ -17,9 +17,30 @@ const SCreateOrder = async (
     return next(createHttpError(400, "User Not Allowed to order"));
   }
 
-  await sendMail(user.email, "Your Order Placed", ``);
+  if (payload.paymentMethod === "cod") {
+    await sendMail(user.email, "Your Order Placed by Cash On Delivery", ``);
 
-  return await Order.create({ ...payload, customer: userId });
+    const orderData = await Order.create({
+      ...payload,
+      customer: userId,
+      paymentStatus: "unpaid",
+    });
+    return { type: "cod", order: orderData };
+  }
+
+  if (payload.paymentMethod === "sslcommerz") {
+    await sendMail(
+      user.email,
+      "Your Order Placed by SSL Commerz,confirm your payment",
+      ``
+    );
+    const orderData = await Order.create({
+      ...payload,
+      customer: userId,
+      status: "pending",
+    });
+    return { type: "sslcommerz", order: orderData };
+  }
 };
 
 const SGetMyOrders = async (req: Request) => {
@@ -31,7 +52,7 @@ const SUpdateOrderStatus = async (
   status: string,
   next: NextFunction
 ) => {
-  const order = await Order.findByIdAndUpdate()
+  const order = await Order.findByIdAndUpdate();
 };
 export const SOrder = {
   SCreateOrder,

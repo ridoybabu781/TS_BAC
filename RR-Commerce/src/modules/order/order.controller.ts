@@ -10,17 +10,30 @@ export const createOrder = async (
   next: NextFunction
 ) => {
   try {
-    const order = SOrder.SCreateOrder(
-      req as Request,
+    const result = await SOrder.SCreateOrder(
       req.body as IOrder,
+      req as Request,
       next as NextFunction
     );
 
-    if (!order) {
+    if (!result) {
       return next(createHttpError(400, "Order Creation Failed"));
     }
 
-    res.status(201).json({ message: "Order placed successful", order });
+    if (result.type === "cod") {
+      return res.status(201).json({
+        message: "Order created by cash on delivery",
+        order: result.order,
+      });
+    }
+
+    if (result.type === "sslcommerz") {
+      return res.status(201).json({
+        message: "Order created by SSLCommerz, please pay for confirmation",
+        order: result.order,
+        redirectUrl: `/payment/payBill/${result.order._id}`,
+      });
+    }
   } catch (error) {
     next(error);
   }
@@ -54,7 +67,7 @@ export const updateOrderStatus = async (
       next as NextFunction
     );
     if (!updatedOrder) {
-      return next()
+      return next();
     }
   } catch (error) {
     next(error);

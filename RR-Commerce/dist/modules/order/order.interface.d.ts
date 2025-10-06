@@ -17,6 +17,9 @@ export interface IOrder extends Document {
     status: "pending" | "paid" | "shipped" | "completed" | "canceled";
     paymentMethod: "cod" | "sslcommerz";
     shippingAddress: address;
+    phone: string;
+    transactionId?: string;
+    paymentStatus: "unpaid" | "paid" | "failed";
     createdAt: Date;
     updatedAt: Date;
 }

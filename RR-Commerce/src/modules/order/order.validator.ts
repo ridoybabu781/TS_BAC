@@ -21,4 +21,5 @@ export const VCreateOrder = Joi.object({
     country: Joi.string().required(),
     postalCode: Joi.string().required(),
   }).required(),
+  phone: Joi.string().required(),
 });

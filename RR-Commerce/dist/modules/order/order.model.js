@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { required } from "joi";
 const OrderSchema = new Schema({
     customer: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     items: {
@@ -24,6 +25,16 @@ const OrderSchema = new Schema({
         city: { type: String, required: true },
         country: { type: String, required: true },
         postalCode: { type: String, required: true },
+    },
+    phone: {
+        type: String,
+        required: true,
+    },
+    transactionId: { type: String },
+    paymentStatus: {
+        type: String,
+        enum: ["unpaid", "paid", "failed"],
+        default: "unpaid",
     },
 }, { timestamps: true });
 export const Order = model("Order", OrderSchema);

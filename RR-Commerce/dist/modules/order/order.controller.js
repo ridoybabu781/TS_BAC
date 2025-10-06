@@ -3,11 +3,23 @@ import createHttpError from "http-errors";
 import { sendMail } from "../../utils/sendMail.js";
 export const createOrder = async (req, res, next) => {
     try {
-        const order = SOrder.SCreateOrder(req, req.body, next);
-        if (!order) {
+        const result = await SOrder.SCreateOrder(req.body, req, next);
+        if (!result) {
             return next(createHttpError(400, "Order Creation Failed"));
         }
-        res.status(201).json({ message: "Order placed successful", order });
+        if (result.type === "cod") {
+            return res.status(201).json({
+                message: "Order created by cash on delivery",
+                order: result.order,
+            });
+        }
+        if (result.type === "sslcommerz") {
+            return res.status(201).json({
+                message: "Order created by SSLCommerz, please pay for confirmation",
+                order: result.order,
+                redirectUrl: `/payment/payBill/${result.order._id}`,
+            });
+        }
     }
     catch (error) {
         next(error);
