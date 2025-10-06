@@ -40,8 +40,11 @@ export const updateOrderStatus = async (req, res, next) => {
     try {
         const updatedOrder = await SOrder.SUpdateOrderStatus(req, req.body.status, next);
         if (!updatedOrder) {
-            return next();
+            return next(createHttpError(400, "Order Updation failed"));
         }
+        res
+            .status(200)
+            .json({ message: "Order Updated Successfully", updatedOrder });
     }
     catch (error) {
         next(error);

@@ -66,8 +66,11 @@ export const updateOrderStatus = async (
       next as NextFunction
     );
     if (!updatedOrder) {
-      return next();
+      return next(createHttpError(400, "Order Updation failed"));
     }
+    res
+      .status(200)
+      .json({ message: "Order Updated Successfully", updatedOrder });
   } catch (error) {
     next(error);
   }

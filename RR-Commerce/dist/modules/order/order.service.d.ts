@@ -14,6 +14,10 @@ export declare const SOrder: {
     }> & {
         __v: number;
     })[]>;
-    SUpdateOrderStatus: (req: Request, status: string, next: NextFunction) => Promise<void>;
+    SUpdateOrderStatus: (req: Request, status: string, next: NextFunction) => Promise<(import("mongoose").Document<unknown, {}, IOrder, {}, import("mongoose").DefaultSchemaOptions> & IOrder & Required<{
+        _id: unknown;
+    }> & {
+        __v: number;
+    }) | null>;
 };
 //# sourceMappingURL=order.service.d.ts.map

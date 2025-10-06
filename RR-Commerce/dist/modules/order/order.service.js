@@ -31,7 +31,7 @@ const SGetMyOrders = async (req) => {
     return await Order.find({ customer: req.userId });
 };
 const SUpdateOrderStatus = async (req, status, next) => {
-    const order = await Order.findByIdAndUpdate();
+    return await Order.findByIdAndUpdate(req.params.id, { status }, { new: true });
 };
 export const SOrder = {
     SCreateOrder,

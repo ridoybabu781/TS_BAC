@@ -52,7 +52,7 @@ const SUpdateOrderStatus = async (
   status: string,
   next: NextFunction
 ) => {
-  const order = await Order.findByIdAndUpdate();
+  return await Order.findByIdAndUpdate(req.params.id,{status},{new:true});
 };
 export const SOrder = {
   SCreateOrder,

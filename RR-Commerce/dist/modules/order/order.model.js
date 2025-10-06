@@ -2,11 +2,7 @@ import { model, Schema } from "mongoose";
 import { cartItemSchema } from "../cart/cart.model.js";
 const OrderSchema = new Schema({
     customer: { type: Schema.Types.ObjectId, required: true, ref: "User" },
-    items: {
-        type: [cartItemSchema],
-        required: true,
-        default: [],
-    },
+    items: [cartItemSchema],
     totalPrice: { type: Number, required: true },
     status: {
         type: String,
