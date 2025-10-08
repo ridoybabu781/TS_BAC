@@ -1,13 +1,68 @@
-import type { NextFunction } from "express";
+import type { NextFunction, Request } from "express";
 import type { IBaseUser } from "./user.interface.js";
 import User from "./user.model.js";
 import createHttpError from "http-errors";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { sendMail } from "../../utils/sendMail.js";
+import { VerifyCode } from "./verificationCode.model.js";
+
+const USendCode = async (email: string) => {
+  const user = await User.findOne({ email });
+  if (user) {
+    throw createHttpError(400, "User already exist");
+  }
+
+  const verificationCode = Math.floor(100000 + Math.random() * 900000);
+
+  const result = await VerifyCode.create({ email, verificationCode });
+  if (!result) {
+    throw createHttpError(400, "Failed to create verification code");
+  }
+  await sendMail(
+    email,
+    "Your RR-Commerce verification code",
+    `${verificationCode}`
+  );
+
+  return result;
+};
+
+const UVerifyCode = async (req: Request) => {
+  return await VerifyCode.findOne({
+    email: req.body.email,
+    verificationCode: req.body.verificationCode,
+  });
+};
 
 const UCreate = async (payload: IBaseUser) => {
   const hashedPass = await bcrypt.hash(payload.password, 10);
 
-  return await User.create({ ...payload, password: hashedPass });
+  const user = new User({ ...payload, password: hashedPass });
+
+  await VerifyCode.deleteOne({ email: user.email });
+
+  const accessToken = jwt.sign(
+    { id: user._id, email: user.email },
+    process.env.JWT_SECRET as string,
+    { expiresIn: "1h" }
+  );
+
+  const refreshToken = jwt.sign(
+    { id: user._id, email: user.email },
+    process.env.JWT_SECRET as string,
+    { expiresIn: "7d" }
+  );
+
+  user.refreshToken = refreshToken;
+
+  await user.save();
+
+  return {
+    user,
+    accessToken,
+    refreshToken,
+  };
 };
 
 const ULogin = async (email: String, password: String, next: NextFunction) => {
@@ -36,10 +91,30 @@ const ULogin = async (email: String, password: String, next: NextFunction) => {
     return next(createHttpError(400, "Password didn't matched"));
   }
 
+  const accessToken = jwt.sign(
+    { id: user._id, email: user.email },
+    process.env.JWT_SECRET as string,
+    { expiresIn: "1h" }
+  );
+
+  const refreshToken = jwt.sign(
+    { id: user._id, email: user.email },
+    process.env.JWT_SECRET as string,
+    { expiresIn: "7d" }
+  );
+
+  user.refreshToken = refreshToken;
+
+  await user.save();
+
   const userData = user.toObject();
   delete userData.password;
 
-  return userData;
+  return {
+    user: userData,
+    accessToken,
+    refreshToken,
+  };
 };
 
 const UProfile = async (userId: string) => {
@@ -53,9 +128,11 @@ const UDelete = async (id: string) => {
 };
 
 export const SUser = {
+  USendCode,
   UCreate,
   ULogin,
   UProfile,
   UUpdate,
   UDelete,
+  UVerifyCode,
 };

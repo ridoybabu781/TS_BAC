@@ -52,6 +52,8 @@ const userModel = new Schema<IBaseUser>({
     enum: ["yes", "pending", "no"],
     default: "pending",
   },
+
+  refreshToken:String
 });
 
 const User = model("User", userModel);

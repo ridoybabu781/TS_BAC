@@ -20,6 +20,7 @@ export interface IBaseUser extends IVendor, IAdmin {
     address?: Address;
     phone?: number;
     countryCode?: string;
+    refreshToken?: string;
     createdAt?: Date;
     updatedAt?: Date;
 }

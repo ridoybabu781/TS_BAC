@@ -1,4 +1,11 @@
 import joi from "joi";
+export const VSendVCode = joi.object({
+    email: joi.string().email().required(),
+});
+export const VVerifyCode = joi.object({
+    email: joi.string().email().required(),
+    verificationCode: joi.number().required(),
+});
 export const VCreateUser = joi.object({
     name: joi.string().min(3).required().trim(),
     email: joi.string().email().required().lowercase(),

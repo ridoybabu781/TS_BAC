@@ -8,6 +8,9 @@ export const handleError = async (
   if (error) {
     return res
       .status(error.status || 500)
-      .json({ message: error.message || "Internal Server Error" });
+      .json({
+        success: false,
+        message: error.message || "Internal Server Error",
+      });
   }
 };

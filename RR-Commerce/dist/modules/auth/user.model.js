@@ -49,6 +49,7 @@ const userModel = new Schema({
         enum: ["yes", "pending", "no"],
         default: "pending",
     },
+    refreshToken: String
 });
 const User = model("User", userModel);
 export default User;

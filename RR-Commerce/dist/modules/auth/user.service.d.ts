@@ -1,16 +1,29 @@
-import type { NextFunction } from "express";
+import type { NextFunction, Request } from "express";
 import type { IBaseUser } from "./user.interface.js";
 export declare const SUser: {
-    UCreate: (payload: IBaseUser) => Promise<import("mongoose").Document<unknown, {}, IBaseUser, {}, import("mongoose").DefaultSchemaOptions> & IBaseUser & Required<{
-        _id: string;
-    }> & {
+    USendCode: (email: string) => Promise<import("mongoose").Document<unknown, {}, import("./verificationCode.model.js").IVerifyCode, {}, import("mongoose").DefaultSchemaOptions> & import("./verificationCode.model.js").IVerifyCode & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
         __v: number;
     }>;
-    ULogin: (email: String, password: String, next: NextFunction) => Promise<void | (IBaseUser & Required<{
-        _id: string;
-    }> & {
-        __v: number;
-    })>;
+    UCreate: (payload: IBaseUser) => Promise<{
+        user: import("mongoose").Document<unknown, {}, IBaseUser, {}, import("mongoose").DefaultSchemaOptions> & IBaseUser & Required<{
+            _id: string;
+        }> & {
+            __v: number;
+        };
+        accessToken: string;
+        refreshToken: string;
+    }>;
+    ULogin: (email: String, password: String, next: NextFunction) => Promise<void | {
+        user: IBaseUser & Required<{
+            _id: string;
+        }> & {
+            __v: number;
+        };
+        accessToken: string;
+        refreshToken: string;
+    }>;
     UProfile: (userId: string) => Promise<(import("mongoose").Document<unknown, {}, IBaseUser, {}, import("mongoose").DefaultSchemaOptions> & IBaseUser & Required<{
         _id: string;
     }> & {
@@ -24,6 +37,11 @@ export declare const SUser: {
     UDelete: (id: string) => Promise<(import("mongoose").Document<unknown, {}, IBaseUser, {}, import("mongoose").DefaultSchemaOptions> & IBaseUser & Required<{
         _id: string;
     }> & {
+        __v: number;
+    }) | null>;
+    UVerifyCode: (req: Request) => Promise<(import("mongoose").Document<unknown, {}, import("./verificationCode.model.js").IVerifyCode, {}, import("mongoose").DefaultSchemaOptions> & import("./verificationCode.model.js").IVerifyCode & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
         __v: number;
     }) | null>;
 };
