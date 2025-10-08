@@ -43,12 +43,22 @@ interface AuthState {
 
   login: (formData: { email: string; password: string }) => Promise<void>;
   profile: () => Promise<void>;
+
+  updatePassword: (oldPass: string, newPass: string) => Promise<void>;
+  forgetPasswordCode: (email: string) => Promise<{ success: boolean }>;
+  forgetPassword: (
+    email: string,
+    verificationCode: number,
+    newPassword: string
+  ) => Promise<{ success: boolean }>;
+  resetMessage: () => Promise<void>;
 }
 
 export const userStore = create((set): AuthState => {
   return {
     user: null,
     message: "",
+    loading: false,
 
     sendSignupCode: async (email: string) => {
       try {
@@ -122,6 +132,67 @@ export const userStore = create((set): AuthState => {
       } catch (error: any) {
         set({ message: error?.response?.data.message || error.message });
       }
+    },
+
+    updatePassword: async (oldPass: string, newPass: string) => {
+      set({ loading: true });
+      try {
+        const res = await axiosInstance.put("/user/updatePassword", {
+          oldPass,
+          newPass,
+        });
+        set({ message: res.data.message, loading: false });
+      } catch (error: any) {
+        set({
+          message: error.response?.data?.message || error.message,
+          loading: false,
+        });
+      }
+    },
+
+    forgetPasswordCode: async (email: string) => {
+      set({ loading: true });
+
+      try {
+        const res = await axiosInstance.post("/user/sendForgetPassCode", {
+          email,
+        });
+        set({ message: res.data.message, loading: false });
+        return { success: true };
+      } catch (error: any) {
+        set({
+          message: error.response?.data?.message || error.message,
+          loading: false,
+        });
+        return { success: false };
+      }
+    },
+
+    forgetPassword: async (
+      email: string,
+      verificationCode: number,
+      newPassword: string
+    ) => {
+      set({ loading: true });
+      try {
+        const res = await axiosInstance.post("/user/forgetPassword", {
+          email,
+          verificationCode,
+          newPassword,
+        });
+        set({ message: res.data.message, loading: false });
+        return { success: true };
+      } catch (error: any) {
+        set({
+          message: error.response?.data?.message || error.message,
+          loading: false,
+        });
+        return { success: false };
+      }
+    },
+
+    resetMessage: async () => {
+      set({ message: "" });
     },
   };
 });

@@ -11,6 +11,8 @@ import { CartRouter } from "./modules/cart/cart.routes.js";
 import { ReviewRouter } from "./modules/review/review.routes.js";
 import { OrderRouter } from "./modules/order/order.routes.js";
 import { PaymentRouter } from "./modules/payment/payment.routes.js";
+import { configDotenv } from "dotenv";
+configDotenv();
 
 const app: Application = express();
 
@@ -20,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.ORIGIN || "http://localhost:5173",
+    origin: process.env.ORIGIN,
     credentials: true,
   })
 );
