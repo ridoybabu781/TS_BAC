@@ -1,13 +1,13 @@
 import type { NextFunction, Request } from "express";
 import type { IBaseUser } from "./user.interface.js";
 export declare const SUser: {
-    USendCode: (email: string) => Promise<import("mongoose").Document<unknown, {}, import("./verificationCode.model.js").IVerifyCode, {}, import("mongoose").DefaultSchemaOptions> & import("./verificationCode.model.js").IVerifyCode & {
-        _id: import("mongoose").Types.ObjectId;
-    } & {
+    USendCode: (email: string) => Promise<import("mongoose").Document<unknown, {}, import("./verificationCode.model.js").IVerifyCode, {}, import("mongoose").DefaultSchemaOptions> & import("./verificationCode.model.js").IVerifyCode & Required<{
+        _id: unknown;
+    }> & {
         __v: number;
     }>;
     UCreate: (payload: IBaseUser) => Promise<{
-        user: import("mongoose").Document<unknown, {}, IBaseUser, {}, import("mongoose").DefaultSchemaOptions> & IBaseUser & Required<{
+        user: IBaseUser & Required<{
             _id: string;
         }> & {
             __v: number;
@@ -39,10 +39,23 @@ export declare const SUser: {
     }> & {
         __v: number;
     }) | null>;
-    UVerifyCode: (req: Request) => Promise<(import("mongoose").Document<unknown, {}, import("./verificationCode.model.js").IVerifyCode, {}, import("mongoose").DefaultSchemaOptions> & import("./verificationCode.model.js").IVerifyCode & {
-        _id: import("mongoose").Types.ObjectId;
-    } & {
+    UVerifyCode: (req: Request) => Promise<(import("mongoose").Document<unknown, {}, import("./verificationCode.model.js").IVerifyCode, {}, import("mongoose").DefaultSchemaOptions> & import("./verificationCode.model.js").IVerifyCode & Required<{
+        _id: unknown;
+    }> & {
         __v: number;
     }) | null>;
+    UChangePassword: (req: Request) => Promise<(import("mongoose").Document<unknown, {}, IBaseUser, {}, import("mongoose").DefaultSchemaOptions> & IBaseUser & Required<{
+        _id: string;
+    }> & {
+        __v: number;
+    }) | null>;
+    UForgetPassword: (email: string, verificationCode: number, newPass: string) => Promise<{
+        success: boolean;
+        message: string;
+    }>;
+    USendForgetPassCode: (email: string) => Promise<{
+        success: boolean;
+        message: string;
+    }>;
 };
 //# sourceMappingURL=user.service.d.ts.map

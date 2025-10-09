@@ -1,6 +1,9 @@
 import { Router } from "express";
 
 import {
+  changePasswordValidator,
+  forgetPasswordValidator,
+  sendForgetPassCodeValidator,
   VCreateUser,
   VLogin,
   VSendVCode,
@@ -8,10 +11,13 @@ import {
   VVerifyCode,
 } from "./user.validator.js";
 import {
+  changePassword,
   createUser,
   deleteUser,
+  forgetPassword,
   login,
   profile,
+  sendForgetPassCode,
   sendVerificationCode,
   update,
   verifyCode,
@@ -28,5 +34,21 @@ router.post("/login", validation(VLogin), login);
 router.put("/update", isUser, validation(VUpdate), update);
 router.get("/profile", isUser, profile);
 router.delete("/delete", isUser, deleteUser);
+router.put(
+  "/updatePassword",
+  isUser,
+  validation(changePasswordValidator),
+  changePassword
+);
+router.post(
+  "/sendForgetPassCode",
+  validation(sendForgetPassCodeValidator),
+  sendForgetPassCode
+);
+router.post(
+  "/forgetPassword",
+  validation(forgetPasswordValidator),
+  forgetPassword
+);
 
 export const UserRouter = router;

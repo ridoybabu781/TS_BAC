@@ -4,4 +4,7 @@ export declare const VVerifyCode: joi.ObjectSchema<any>;
 export declare const VCreateUser: joi.ObjectSchema<any>;
 export declare const VLogin: joi.ObjectSchema<any>;
 export declare const VUpdate: joi.ObjectSchema<any>;
+export declare const changePasswordValidator: joi.ObjectSchema<any>;
+export declare const sendForgetPassCodeValidator: joi.ObjectSchema<any>;
+export declare const forgetPasswordValidator: joi.ObjectSchema<any>;
 //# sourceMappingURL=user.validator.d.ts.map

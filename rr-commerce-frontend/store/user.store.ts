@@ -32,8 +32,8 @@ interface AuthState {
   loading: boolean;
   user: User | null;
 
-  sendSignupCode: (email: string) => Promise<void>;
-  verifyCode: (email: string, code: number) => Promise<void>;
+  sendSignupCode: (email: string) => Promise<{ success: boolean }>;
+  verifyCode: (email: string, code: number) => Promise<{ success: boolean }>;
   signUp: (formData: {
     name: string;
     email: string;
@@ -67,24 +67,29 @@ export const userStore = create((set): AuthState => {
           throw new Error("Failed to send to ");
         }
         set({ message: res?.data?.message });
+        return { success: true };
       } catch (error: any) {
         set({ message: error?.response?.data?.message || error.message });
+        return { success: false };
       }
     },
 
-    verifyCode: async (email: string, code: number) => {
+    verifyCode: async (email: string, verificationCode: number) => {
       try {
         const res = await axiosInstance.post("/auth/verifySignupCode", {
           email,
-          code,
+          verificationCode,
         });
 
         if (!res.data.success) {
           throw new Error("Code verification failed");
         }
         set({ message: res?.data?.message });
+        return { success: true };
       } catch (error: any) {
         set({ message: error?.response?.data.message || error.message });
+
+        return { success: false };
       }
     },
 
@@ -111,33 +116,41 @@ export const userStore = create((set): AuthState => {
       }
     },
     login: async (formData: { email: string; password: string }) => {
+      set({ loading: true, message: "" });
       try {
         const res = await axiosInstance.post("/auth/login", formData);
         if (res.data.success !== true) {
           throw new Error("Login failed");
         }
-        set({ message: res.data.message, user: res.data.user });
+        set({ message: res.data.message, user: res.data.user, loading: false });
       } catch (error: any) {
-        set({ message: error?.response?.data.message || error.message });
+        set({
+          message: error?.response?.data.message || error.message,
+          loading: false,
+        });
       }
     },
 
     profile: async () => {
+      set({ message: "", loading: true });
       try {
-        const res = await axiosInstance.post("/auth/profile");
+        const res = await axiosInstance.get("/auth/profile");
         if (res.data.success !== true) {
           throw new Error("User data fetching failed");
         }
-        set({ message: res.data.message, user: res.data.user });
+        set({ user: res.data.user, loading: false });
       } catch (error: any) {
-        set({ message: error?.response?.data.message || error.message });
+        set({
+          message: error?.response?.data.message || error.message,
+          loading: false,
+        });
       }
     },
 
     updatePassword: async (oldPass: string, newPass: string) => {
       set({ loading: true });
       try {
-        const res = await axiosInstance.put("/user/updatePassword", {
+        const res = await axiosInstance.put("/auth/updatePassword", {
           oldPass,
           newPass,
         });
@@ -154,7 +167,7 @@ export const userStore = create((set): AuthState => {
       set({ loading: true });
 
       try {
-        const res = await axiosInstance.post("/user/sendForgetPassCode", {
+        const res = await axiosInstance.post("/auth/sendForgetPassCode", {
           email,
         });
         set({ message: res.data.message, loading: false });
@@ -175,7 +188,7 @@ export const userStore = create((set): AuthState => {
     ) => {
       set({ loading: true });
       try {
-        const res = await axiosInstance.post("/user/forgetPassword", {
+        const res = await axiosInstance.post("/auth/forgetPassword", {
           email,
           verificationCode,
           newPassword,

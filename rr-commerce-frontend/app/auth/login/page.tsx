@@ -1,19 +1,20 @@
 "use client";
 
+import Loading from "@/app/loading";
 import { userStore } from "@/store/user.store";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import image from "@/public/images/loginPage.png";
+import React, { useEffect, useState } from "react";
 
 export default function Login() {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [pageLoading, setPageLoading] = useState(true);
 
-  const { user, message, loading, login } = userStore();
+  const { user, message, login } = userStore();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,15 +26,22 @@ export default function Login() {
     e.preventDefault();
 
     await login(formData);
+    setLoading(false);
   };
   const navigate = useRouter();
 
   {
     user ? navigate.push("/") : null;
   }
-  if (loading) {
-    return <h2>Loading</h2>;
+
+  useEffect(() => {
+    setPageLoading(false);
+  }, []);
+
+  if (pageLoading) {
+    return <Loading />;
   }
+
   return (
     <div className="flex flex-col md:flex-row my-16 gap-12 mx-auto  items-center justify-center">
       <div className="m-auto  md:1/2">
@@ -76,7 +84,7 @@ export default function Login() {
             >
               {loading ? "Logging in..." : "Log in"}
             </button>
-            <Link href={"/null"}> Forget password? </Link>
+            <Link href={"/auth/forget-password"}> Forget password? </Link>
           </div>
 
           <p className="mt-8 text-center">

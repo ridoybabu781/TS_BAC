@@ -1,6 +1,6 @@
-import { model, Schema } from "mongoose";
+import { Document, model, Schema } from "mongoose";
 
-export interface IVerifyCode {
+export interface IVerifyCode extends Document {
   email: string;
   verificationCode: number;
   createdAt?: Date;

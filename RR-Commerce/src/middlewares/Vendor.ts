@@ -12,10 +12,31 @@ export const isVendor = async (
 ) => {
   try {
     const token = req.cookies.token;
-    if (!token) {
-      return next(createHttpError("Unauthorized"));
-    }
+    const refreshToken = req.cookies.refreshToken;
 
+    if (!token && refreshToken) {
+      const refreshToken = req.cookies.refreshToken;
+      if (!refreshToken) {
+        return next(createHttpError(401, "Please login first"));
+      }
+      const decodedRefresh = jwt.verify(
+        refreshToken,
+        process.env.JWT_SECRET as string
+      ) as JwtPayload;
+
+      const newAccessToken = jwt.sign(
+        { id: decodedRefresh.id, email: decodedRefresh.email },
+        process.env.JWT_SECRET as string,
+        { expiresIn: "1h" }
+      );
+
+      res.cookie("token", newAccessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 60 * 60 * 1000,
+      });
+    }
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
     const user = await User.findById(decoded.id);
     if (!user) {
@@ -28,7 +49,7 @@ export const isVendor = async (
     ) {
       res.clearCookie("token", {
         httpOnly: true,
-        secure: false,
+        secure: true,
       });
       return next(createHttpError(401, "You're not allowed to fetch data"));
     }

@@ -8,6 +8,8 @@ import bcrypt from "bcrypt";
 const VCreate = async (payload: IBaseUser) => {
   const hashedPass = await bcrypt.hash(payload.password, 10);
 
+  
+
   return await User.create({ ...payload, password: hashedPass });
 };
 

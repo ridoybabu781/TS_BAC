@@ -39,13 +39,13 @@ export const createUser = async (req, res, next) => {
             .status(201)
             .cookie("token", result.accessToken, {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: "none",
             maxAge: 60 * 60 * 1000,
         })
             .cookie("refreshToken", result.refreshToken, {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: "none",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         })
@@ -122,7 +122,7 @@ export const deleteUser = async (req, res, next) => {
     try {
         const id = req.userId;
         const deletedUser = await SUser.UDelete(id);
-        if (!deleteUser) {
+        if (!deletedUser) {
             return next(createHttpError(400).json({
                 message: "User Deletion Failed",
                 deleteUser,
@@ -131,6 +131,52 @@ export const deleteUser = async (req, res, next) => {
         res
             .status(200)
             .json({ success: true, message: "User Deleted Successfully" });
+    }
+    catch (error) {
+        next(error);
+    }
+};
+export const changePassword = async (req, res, next) => {
+    try {
+        const result = await SUser.UChangePassword(req);
+    }
+    catch (error) {
+        next(error);
+    }
+};
+export const sendForgetPassCode = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        const result = await SUser.USendForgetPassCode(email);
+        res.status(200).json(result);
+    }
+    catch (error) {
+        next(error);
+    }
+};
+export const forgetPassword = async (req, res, next) => {
+    try {
+        const { email, verificationCode, newPass } = req.body;
+        const result = await SUser.UForgetPassword(email, verificationCode, newPass);
+        res.status(200).json(result);
+    }
+    catch (error) {
+        next(error);
+    }
+};
+export const logout = async (req, res, next) => {
+    try {
+        res.clearCookie("token", {
+            secure: true,
+            sameSite: "none",
+            httpOnly: true,
+        });
+        res.clearCookie("refreshToken", {
+            secure: true,
+            sameSite: "none",
+            httpOnly: true,
+        });
+        res.status(200).json({ message: "Logout successful" });
     }
     catch (error) {
         next(error);
