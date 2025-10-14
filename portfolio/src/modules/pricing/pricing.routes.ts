@@ -1,0 +1,19 @@
+import { Router } from "express";
+import { isAdmin } from "../../middlewares/Admin.js";
+import {
+  createPricing,
+  deletePricing,
+  getPricing,
+  getPricings,
+} from "./pricing.controller.js";
+import { Validator } from "../../middlewares/validator.js";
+import { VPricingSchema } from "./pricing.validator.js";
+
+const router = Router();
+
+router.post("/addPricing", isAdmin, Validator(VPricingSchema), createPricing);
+router.get("/", getPricings);
+router.get("/:id", getPricing);
+router.delete("/:id", isAdmin, deletePricing);
+
+export const PricingRouter = router;

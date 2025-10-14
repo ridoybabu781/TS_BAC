@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
 import jwt from "jsonwebtoken";
-import { User } from "../models/user.model.js";
+import { User } from "../modules/auth/user/user.model.js";
 import { configDotenv } from "dotenv";
 configDotenv();
 
