@@ -12,7 +12,11 @@ export const addToCart = async (
     if (!cart) {
       return next(createHttpError(400, "Failed to add cart"));
     }
-    res.status(201).json({ message: "Added to cart successfully", cart });
+    res.status(201).json({
+      success: true,
+      message: "Added to cart successfully",
+      cart,
+    });
   } catch (error) {
     next(error);
   }
@@ -28,6 +32,7 @@ export const getCartItems = async (
       return next(createHttpError(404, "No item found"));
     }
     res.status(200).json({
+      success: true,
       message: "Item fetched successfully",
       cartItems,
     });
@@ -45,9 +50,11 @@ export const removeCartItem = async (
     if (!deletedItem) {
       return next(createHttpError(400, "Failed to remove from cart"));
     }
-    res
-      .status(200)
-      .json({ message: "Item removed from cart successfully", deletedItem });
+    res.status(200).json({
+      success: true,
+      message: "Item removed from cart successfully",
+      deletedItem,
+    });
   } catch (error) {
     next(error);
   }
