@@ -34,7 +34,14 @@ const SGetCartItems = async (req: Request) => {
 };
 
 const SRemoveCartItem = async (req: Request) => {
-  return await Cart.findByIdAndDelete(req.params.id);
+  const userId = req.userId;
+  const productId = req.body.productId;
+  const deletedItem = await Cart.findOneAndDelete({
+    user: userId,
+    "items.product": productId,
+  });
+
+  return deletedItem;
 };
 
 export const CService = {
